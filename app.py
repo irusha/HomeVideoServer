@@ -80,6 +80,7 @@ def hello_world():
 
 @app.route("/videos/<video_name>")
 def video_display(video_name):
+    array_videos = get_videos()
     array_thumbnails = get_thumbnails()
     thumbs_mini = []
     if len(array_thumbnails) <= 3:
@@ -97,11 +98,19 @@ def video_display(video_name):
         dig3 = randoms[2]
 
         while True:
+            current_video_index = array_videos.index(video_name + ".mp4")
+
             if dig1 == dig2:
                 randoms[1] = random.randint(0, len(array_thumbnails) - 1)
             elif dig2 == dig3:
                 randoms[1] = random.randint(0, len(array_thumbnails) - 1)
             elif dig1 == dig3:
+                randoms[2] = random.randint(0, len(array_thumbnails) - 1)
+            elif dig1 == current_video_index:
+                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
+            elif dig2 == current_video_index:
+                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
+            elif dig1 == current_video_index:
                 randoms[2] = random.randint(0, len(array_thumbnails) - 1)
             else:
                 break
