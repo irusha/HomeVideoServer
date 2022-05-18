@@ -15,16 +15,15 @@ if os.path.exists(thumb_folder) == False:
     os.mkdir(thumb_folder)
 
 app = Flask(__name__)
-def get_files():
-    path = os.getcwd() + "\static\Videos"
+def get_files(directory):
+    path = os.getcwd() + directory
     filess = os.listdir(path)
     return filess
 
-files = get_files()
 
-
-def get_videos():
+def get_videos(directory):
     final_file_list = []
+    files = get_files(directory)
     for file in files:
         file_split = file.split('.')
         if file_split[len(file_split) - 1] == "mp4":
@@ -48,8 +47,11 @@ def get_file_name(file):
 
 get_video_name = {}
 
-def get_thumbnails():
-    filess = os.listdir(thumb_folder)
+#folder_path is the folder that contains the videos
+#By default, thumbnails folder automatically created in static\Videos
+#Returns the thumbnails of the videos inside the folder that is given to folder_path argument
+def get_thumbnails(folder_path):
+    filess = os.listdir(os.getcwd() + folder_path + "\\thumbnails")
     final_file_list = []
     for file in filess:
         file_split = file.split('.')
@@ -57,18 +59,22 @@ def get_thumbnails():
             final_file_list.append(file)
     return final_file_list
 
-for thumbName in get_thumbnails():
+for thumbName in get_thumbnails("\\static\\Videos"):
     get_video_name[thumbName] = get_file_name(thumbName)
 
-
+#folder_path is the folder that contains the videos
+#Function cleans up unnecessary thumbnails
 def cleanup_thumbs(folder_path):
-    for thumbnail in get_thumbnails():
+    for thumbnail in get_thumbnails(folder_path):
         path = os.getcwd() + folder_path
         video_name = path + get_file_name(thumbnail) + ".mp4"
         if os.path.exists(video_name) == False:
             os.remove(path + "thumbnails\\" + thumbnail)
     
-def generate_thumbs(videos, folder_path):
+#Function generates thumbnails for the videos inside the given folder_path
+#Thumbnails are stored in the folder "thumbnails"
+def generate_thumbs(folder_path):
+    videos = get_videos(folder_path)
     path = os.getcwd() + folder_path
     for video in videos:
         p = Path(video)
@@ -79,23 +85,20 @@ def generate_thumbs(videos, folder_path):
             ff = FFmpeg(inputs={videoN: None}, outputs={thumbnail_name: ['-ss', '00:00:05', '-vframes', '1']})
             ff.run()
 
-cleanup_thumbs("\\static\\Videos\\")
-generate_thumbs(get_videos(), "\\static\\Videos\\")
-
 
 @app.route("/")
 @app.route("/home")
 def hello_world():
-    #array_videos = get_videos()
-    #video_pairs = [array_videos[x:x+2] for x in range(0, len(array_videos), 2)]
-    array_thumbnails = get_thumbnails()
+    cleanup_thumbs("\\static\\Videos\\")
+    generate_thumbs("\\static\\Videos\\")
+    array_thumbnails = get_thumbnails("\\static\\Videos\\")
     thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
     return render_template('index.html', file_pairs = thumbs_pairs, video_names = get_video_name, folders = get_folders('Videos'))
 
 @app.route("/videos/<video_name>")
 def video_display(video_name):
-    array_videos = get_videos()
-    array_thumbnails = get_thumbnails()
+    array_videos = get_videos("\static\Videos")
+    array_thumbnails = get_thumbnails("\\static\\Videos\\")
     thumbs_mini = []
     if len(array_thumbnails) <= 3:
         thumbs_mini = array_thumbnails
