@@ -1,3 +1,5 @@
+from asyncio.windows_events import NULL
+import numbers
 from posixpath import split
 from turtle import width
 from typing import List
@@ -5,6 +7,7 @@ from flask import Flask, render_template
 import os
 from ffmpy import FFmpeg
 from pathlib import Path
+import random
 
 
 thumb_folder = os.getcwd() + "\\static\\Videos\\thumbnails"
@@ -77,4 +80,33 @@ def hello_world():
 
 @app.route("/videos/<video_name>")
 def video_display(video_name):
-    return render_template('video_display.html', video_name = video_name)
+    array_thumbnails = get_thumbnails()
+    thumbs_mini = []
+    if len(array_thumbnails) <= 3:
+        thumbs_mini = array_thumbnails
+    else:
+        c = 0
+        randoms = []
+        while c<3:
+            n = random.randint(0, len(array_thumbnails) - 1)
+            randoms.append(n)
+            c += 1
+
+        dig1 = randoms[0]
+        dig2 = randoms[1]
+        dig3 = randoms[2]
+
+        while True:
+            if dig1 == dig2:
+                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
+            elif dig2 == dig3:
+                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
+            elif dig1 == dig3:
+                randoms[2] = random.randint(0, len(array_thumbnails) - 1)
+            else:
+                break
+
+        for number in randoms:
+            thumbs_mini.append(array_thumbnails[number])
+
+    return render_template('video_display.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini)
