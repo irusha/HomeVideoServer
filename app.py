@@ -6,6 +6,7 @@ import os
 from ffmpy import FFmpeg
 from pathlib import Path
 
+
 thumb_folder = os.getcwd() + "\\static\\Videos\\thumbnails"
 if os.path.exists(thumb_folder) == False:
     os.mkdir(thumb_folder)
@@ -27,8 +28,12 @@ def get_videos():
             final_file_list.append(file)
     return final_file_list
 
+def get_file_name(file):
+    return Path(file).stem
+
+get_video_name = {}
+
 def get_thumbnails():
-    
     filess = os.listdir(thumb_folder)
     final_file_list = []
     for file in filess:
@@ -36,6 +41,9 @@ def get_thumbnails():
         if file_split[len(file_split) - 1] == "png":
             final_file_list.append(file)
     return final_file_list
+
+for thumbName in get_thumbnails():
+    get_video_name[thumbName] = get_file_name(thumbName)
 
 
 def cleanup_thumbs():
@@ -65,6 +73,8 @@ def hello_world():
     #video_pairs = [array_videos[x:x+2] for x in range(0, len(array_videos), 2)]
     array_thumbnails = get_thumbnails()
     thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
-    return render_template('index.html', file_pairs = thumbs_pairs)
+    return render_template('index.html', file_pairs = thumbs_pairs, video_names = get_video_name)
 
-
+@app.route("/videos/<video_name>")
+def video_display(video_name):
+    return render_template('video_display.html', video_name = video_name)

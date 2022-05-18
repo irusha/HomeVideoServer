@@ -40,7 +40,7 @@ body{
 
 .img_container{
   z-index: 5;
-  margin: 20px;
+  margin: 35px;
   padding: 20px;
   border-radius: 20px;
   backdrop-filter: blur(4px);

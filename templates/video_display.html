@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomeHub</title>
+    <title>{{video_name}} - HomeHub</title>
 </head>
 
 <body>
@@ -17,22 +17,13 @@
                 Home porn server</h1>
         </div>
     </a>
-    <p id="desc_para">Your's own porn gallery</p>
+    <p id="desc_para">{{video_name}}</p>
 
     <div style="position: center;" class="img_container">
-        {% for file_pair in file_pairs %}
         <div class="sample_porn">
-            {% for item in file_pair %}
-            <a href="/videos/{{video_names[item]}}">
-                <div style=" display: inline-block;" class="thumb_container">
-                    <img src="{{url_for('static', filename='Videos/thumbnails/' + item)}}" class="thumbnails">
-                    </video>
-                    <h1 id="desc_para">{{video_names[item]}}</h1>
-                </div>
-            </a>
-            {% endfor %}
+            <video width="960px" height="600px" controls style="margin: 20px;">
+                <source src="{{url_for('static', filename='Videos/' + video_name)}}.mp4" type="video/mp4">
         </div>
-        {% endfor %}
     </div>
 
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
