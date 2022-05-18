@@ -67,6 +67,4 @@ def hello_world():
     thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
     return render_template('index.html', file_pairs = thumbs_pairs)
 
-@app.route("/paka/")
-def ok_fun():
-    return "Ranil ponnaya"
+
