@@ -1,8 +1,5 @@
 from asyncio.windows_events import NULL
-import numbers
 from posixpath import split
-from turtle import width
-from typing import List
 from flask import Flask, render_template
 import os
 from ffmpy import FFmpeg
@@ -10,9 +7,7 @@ from pathlib import Path
 import random
 
 
-thumb_folder = os.getcwd() + "\\static\\Videos\\thumbnails"
-if os.path.exists(thumb_folder) == False:
-    os.mkdir(thumb_folder)
+
 
 app = Flask(__name__)
 def get_files(directory):
@@ -51,7 +46,10 @@ get_video_name = {}
 #By default, thumbnails folder automatically created in static\Videos
 #Returns the thumbnails of the videos inside the folder that is given to folder_path argument
 def get_thumbnails(folder_path):
-    filess = os.listdir(os.getcwd() + folder_path + "\\thumbnails")
+    thumb_folder = os.getcwd() + folder_path + "\\thumbnails"
+    if os.path.exists(thumb_folder) == False:
+        os.mkdir(thumb_folder)
+    filess = os.listdir(thumb_folder)
     final_file_list = []
     for file in filess:
         file_split = file.split('.')
@@ -59,8 +57,6 @@ def get_thumbnails(folder_path):
             final_file_list.append(file)
     return final_file_list
 
-for thumbName in get_thumbnails("\\static\\Videos"):
-    get_video_name[thumbName] = get_file_name(thumbName)
 
 #folder_path is the folder that contains the videos
 #Function cleans up unnecessary thumbnails
@@ -82,7 +78,7 @@ def generate_thumbs(folder_path):
         if os.path.exists(thumbnail_name) == False:
             videoN = path + video
             print(thumbnail_name)
-            ff = FFmpeg(inputs={videoN: None}, outputs={thumbnail_name: ['-ss', '00:00:05', '-vframes', '1']})
+            ff = FFmpeg(inputs={videoN: None}, outputs={thumbnail_name: ['-ss', '00:00:20', '-vframes', '1']})
             ff.run()
 
 
@@ -92,6 +88,8 @@ def hello_world():
     cleanup_thumbs("\\static\\Videos\\")
     generate_thumbs("\\static\\Videos\\")
     array_thumbnails = get_thumbnails("\\static\\Videos\\")
+    for thumbName in get_thumbnails("\\static\\Videos"):
+        get_video_name[thumbName] = get_file_name(thumbName)
     thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
     return render_template('index.html', file_pairs = thumbs_pairs, video_names = get_video_name, folders = get_folders('Videos'))
 
@@ -139,3 +137,13 @@ def video_display(video_name):
             thumbs_mini.append(array_thumbnails[number])
 
     return render_template('video_display.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini)
+
+@app.route("/folders/<folder_name>")
+def folder_display(folder_name):
+    cleanup_thumbs("\\static\\Videos\\" + folder_name + "\\")
+    generate_thumbs("\\static\\Videos\\" + folder_name + "\\")
+    array_thumbnails = get_thumbnails("\\static\\Videos\\" + folder_name + "\\")
+    for thumbName in array_thumbnails:
+        get_video_name[thumbName] = get_file_name(thumbName)
+    thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
+    return render_template('folder_view.html', name = folder_name, file_pairs = thumbs_pairs, video_names = get_video_name, folders = get_folders('Videos'))

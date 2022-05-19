@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} - HomeHub</title>
+</head>
+
+<body>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    
+    <a href="/home">
+        <div>
+            <h1
+                style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; font-size: 40px;">
+                Home porn server</h1>
+        </div>
+    </a>
+    <p id="desc_para">Your's own porn gallery</p>
+
+    <div style="position: center;" class="img_container">
+        {% for file_pair in file_pairs %}
+        <div class="sample_porn">
+            {% for item in file_pair %}
+            <a href="/videos/{{name}}/{{video_names[item]}}">
+                <div style=" display: inline-block;" class="thumb_container">
+                    <img src="{{url_for('static', filename='Videos/' + name + '/thumbnails/' + item)}}" class="thumbnails">
+                    </video>
+                    <h1 id="desc_para2">{{video_names[item]}}</h1>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>
+        {% for folder in folders %}
+        <div>
+            <li id="folderlist">
+                <a id="folderlist_cont" href="/folders/{{folder}}">
+                {{folder}}</a></li>
+        </div>
+        {% endfor %}
+    </div>
+
+    <p id="desc_para">Designed with love by Irusha Sansuka</p>
+
+</body>
+
+</html>
