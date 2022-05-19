@@ -10,7 +10,7 @@
 
 <body>
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-    <a href="/home">
+    <a href="/home" style="text-decoration-line: none;">
         <div>
             <h1
                 style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; font-size: 40px; text-decoration: none;">
@@ -21,27 +21,50 @@
 
     <div style="position: center;" class="img_container">
         <div class="sample_porn">
-            <video width="960px" height="600px" controls style="margin: 20px;">
+            <video controls id="video_D">
                 <source src="{{url_for('static', filename=file_links[video_name] + video_name)}}.mp4" type="video/mp4">
+            </video>
         </div>
-        
+
         <div class="sample_porn">
             <h1 id="desc_para">Recommended for you</h1>
             {% for item in video_thumbs %}
             <a href="/videos/{{item}}">
 
                 <div style=" display: inline-block;" class="thumb_container">
-                    <img src="{{url_for('static', filename=file_links[item] + 'thumbnails/' + item + '.png')}}" class="thumbnails">
-                    </video>
+                    <img src="{{url_for('static', filename=file_links[item] + 'thumbnails/' + item + '.png')}}"
+                        class="thumbnails">
+
                     <h1 id="desc_para2">{{item}}</h1>
                 </div>
             </a>
             {% endfor %}
         </div>
+        <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>
+        {% for folder in folders %}
+        <div>
+            <li id="folderlist">
+                <a id="folderlist_cont" href="/folders/{{folder}}">
+                    {{folder}}</a>
+            </li>
+        </div>
+        {% endfor %}
     </div>
 
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
 
+    <script>
+        var video2 = this.document.getElementById('video_D')
+        window.onload = function () {
+            video2.setAttribute('width', document.body.clientWidth - 20)
+        }
+        window.addEventListener("resize", function (event) {
+            console.log(document.body.clientWidth + ' wide by ' + document.body.clientHeight + ' high');
+
+            video2.setAttribute('width', document.body.clientWidth - 50)
+
+        })
+    </script>
 </body>
 
 </html>

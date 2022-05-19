@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
     <title>HomeHub</title>
 </head>
 
 <body>
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-    
-    <a href="/home">
+
+    <a href="/home" style="text-decoration-line: none;">
         <div>
             <h1
                 style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; font-size: 40px; text-decoration: none;">
@@ -27,7 +28,6 @@
             <a href="/videos/{{video_names[item]}}">
                 <div style=" display: inline-block;" class="thumb_container">
                     <img src="{{url_for('static', filename='Videos/thumbnails/' + item)}}" class="thumbnails">
-                    </video>
                     <h1 id="desc_para2">{{video_names[item]}}</h1>
                 </div>
             </a>
@@ -39,12 +39,25 @@
         <div>
             <li id="folderlist">
                 <a id="folderlist_cont" href="/folders/{{folder}}">
-                {{folder}}</a></li>
+                    {{folder}}</a>
+            </li>
         </div>
         {% endfor %}
     </div>
 
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
+    <script>
+        console.log(navigator.userAgent)
+        if (
+            navigator.userAgent.match(/Android/i) ||
+            navigator.userAgent.match(/iPhone/i)
+        ) {
+            console.log("You are on mobile view")
+            window.onload = function () {
+                location.href = "m"
+            }
+        }
+    </script>
 
 </body>
 

@@ -11,7 +11,7 @@
 <body>
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
     
-    <a href="/home">
+    <a href="/home" style="text-decoration-line: none;">
         <div>
             <h1
                 style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; font-size: 40px; text-decoration: none;">
@@ -27,7 +27,6 @@
             <a href="/videos/{{video_names[item]}}">
                 <div style=" display: inline-block;" class="thumb_container">
                     <img src="{{url_for('static', filename='Videos/' + name + '/thumbnails/' + item)}}" class="thumbnails">
-                    </video>
                     <h1 id="desc_para2">{{video_names[item]}}</h1>
                 </div>
             </a>
