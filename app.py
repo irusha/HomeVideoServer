@@ -4,7 +4,6 @@ from flask import Flask, render_template
 import os
 from ffmpy import FFmpeg
 from pathlib import Path
-import random
 from random import sample
 
 videos_folder = "\\static\\Videos\\"
