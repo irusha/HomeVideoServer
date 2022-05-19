@@ -6,7 +6,7 @@ from ffmpy import FFmpeg
 from pathlib import Path
 import random
 
-
+videos_folder = "\\static\\Videos\\"
 
 
 app = Flask(__name__)
@@ -16,12 +16,11 @@ def get_files(directory):
     return filess
 
 
-def get_videos(directory):
+def get_files_with_extension(files, extension):
     final_file_list = []
-    files = get_files(directory)
     for file in files:
         file_split = file.split('.')
-        if file_split[len(file_split) - 1] == "mp4":
+        if file_split[len(file_split) - 1] == extension:
             final_file_list.append(file)
     return final_file_list
 
@@ -33,8 +32,6 @@ def get_folders(current_folder):
             folder_list.append(folder)
 
     return folder_list
-
-print(get_folders("Videos")[0])
 
 
 def get_file_name(file):
@@ -70,7 +67,8 @@ def cleanup_thumbs(folder_path):
 #Function generates thumbnails for the videos inside the given folder_path
 #Thumbnails are stored in the folder "thumbnails"
 def generate_thumbs(folder_path):
-    videos = get_videos(folder_path)
+    filesList = get_files(folder_path)
+    videos = get_files_with_extension(filesList, 'mp4')
     path = os.getcwd() + folder_path
     for video in videos:
         p = Path(video)
@@ -82,12 +80,56 @@ def generate_thumbs(folder_path):
             ff.run()
 
 
+#First we have to clean up thumbnails of the old videos and generate thumbnails for new videos
+for folder in get_folders('Videos'):
+    cleanup_thumbs(videos_folder + folder + "\\")
+    generate_thumbs(videos_folder + folder + "\\")
+    array_thumbnails = get_thumbnails(videos_folder + folder + "\\")
+    for thumbName in array_thumbnails:
+        get_video_name[thumbName] = get_file_name(thumbName)
+
+cleanup_thumbs(videos_folder)
+generate_thumbs(videos_folder)
+for thumbName in get_thumbnails(videos_folder):
+    get_video_name[thumbName] = get_file_name(thumbName)
+
+#Search for every file in the directory
+list_of_every_file = []
+for root, dirs, files in os.walk(os.getcwd() + "\\" + videos_folder):
+	for file in files:
+        #append the file name to the list
+		list_of_every_file.append(os.path.join(root,file))
+
+#clean up files list to only contain .png fies
+every_thumbnail_paths = get_files_with_extension(list_of_every_file, 'png')
+
+#Get a list that contains only the file names
+every_thumbnail_names = []
+for curr_path in every_thumbnail_paths:
+    every_thumbnail_names.append(str(get_file_name(curr_path)))
+
+#Get the path of the video
+every_video_path = []
+for curr_path in every_thumbnail_paths:
+    splitPath = curr_path.split("\\")
+    if (splitPath[len(splitPath)-3] == 'Videos'):
+        every_video_path.append("\\Videos\\")
+    else:
+        every_video_path.append("\\Videos\\" + splitPath[len(splitPath)-3] + "\\")
+
+#Add the file name and relevent path to a dictionary
+file_links_dictionary = {}
+for curr_ind in range(0, len(every_thumbnail_names) - 1):
+    file_links_dictionary[every_thumbnail_names[curr_ind]] = every_video_path[curr_ind]
+
+
+
 @app.route("/")
 @app.route("/home")
 def hello_world():
-    cleanup_thumbs("\\static\\Videos\\")
-    generate_thumbs("\\static\\Videos\\")
-    array_thumbnails = get_thumbnails("\\static\\Videos\\")
+    cleanup_thumbs(videos_folder)
+    generate_thumbs(videos_folder)
+    array_thumbnails = get_thumbnails(videos_folder)
     for thumbName in get_thumbnails("\\static\\Videos"):
         get_video_name[thumbName] = get_file_name(thumbName)
     thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
@@ -95,8 +137,9 @@ def hello_world():
 
 @app.route("/videos/<video_name>")
 def video_display(video_name):
-    array_videos = get_videos("\static\Videos")
-    array_thumbnails = get_thumbnails("\\static\\Videos\\")
+    filesList = get_files("\static\Videos")
+    array_videos = get_files_with_extension(filesList, 'mp4')
+    array_thumbnails = get_thumbnails(videos_folder)
     thumbs_mini = []
     if len(array_thumbnails) <= 3:
         thumbs_mini = array_thumbnails
@@ -136,13 +179,13 @@ def video_display(video_name):
         for number in randoms:
             thumbs_mini.append(array_thumbnails[number])
 
-    return render_template('video_display.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini)
+    return render_template('video_display.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini, file_links = file_links_dictionary)
 
 @app.route("/folders/<folder_name>")
 def folder_display(folder_name):
-    cleanup_thumbs("\\static\\Videos\\" + folder_name + "\\")
-    generate_thumbs("\\static\\Videos\\" + folder_name + "\\")
-    array_thumbnails = get_thumbnails("\\static\\Videos\\" + folder_name + "\\")
+    cleanup_thumbs(videos_folder + folder_name + "\\")
+    generate_thumbs(videos_folder + folder_name + "\\")
+    array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
     for thumbName in array_thumbnails:
         get_video_name[thumbName] = get_file_name(thumbName)
     thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
