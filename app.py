@@ -5,6 +5,7 @@ import os
 from ffmpy import FFmpeg
 from pathlib import Path
 import random
+from random import sample
 
 videos_folder = "\\static\\Videos\\"
 
@@ -113,15 +114,14 @@ every_video_path = []
 for curr_path in every_thumbnail_paths:
     splitPath = curr_path.split("\\")
     if (splitPath[len(splitPath)-3] == 'Videos'):
-        every_video_path.append("\\Videos\\")
+        every_video_path.append("Videos/")
     else:
-        every_video_path.append("\\Videos\\" + splitPath[len(splitPath)-3] + "\\")
+        every_video_path.append("Videos/" + splitPath[len(splitPath)-3] + "/")
 
 #Add the file name and relevent path to a dictionary
 file_links_dictionary = {}
-for curr_ind in range(0, len(every_thumbnail_names) - 1):
+for curr_ind in range(0, len(every_thumbnail_names)):
     file_links_dictionary[every_thumbnail_names[curr_ind]] = every_video_path[curr_ind]
-
 
 
 @app.route("/")
@@ -137,48 +137,7 @@ def hello_world():
 
 @app.route("/videos/<video_name>")
 def video_display(video_name):
-    filesList = get_files("\static\Videos")
-    array_videos = get_files_with_extension(filesList, 'mp4')
-    array_thumbnails = get_thumbnails(videos_folder)
-    thumbs_mini = []
-    if len(array_thumbnails) <= 3:
-        thumbs_mini = array_thumbnails
-    else:
-        c = 0
-        randoms = []
-        while c<3:
-            n = random.randint(0, len(array_thumbnails) - 1)
-            randoms.append(n)
-            c += 1
-
-        dig1 = randoms[0]
-        dig2 = randoms[1]
-        dig3 = randoms[2]
-
-        k = 0
-        while k < 15:
-            current_video_index = array_videos.index(video_name + ".mp4")
-            print(current_video_index)
-
-            if dig1 == dig2:
-                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
-            elif dig2 == dig3:
-                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
-            elif dig1 == dig3:
-                randoms[2] = random.randint(0, len(array_thumbnails) - 1)
-            elif dig1 == current_video_index:
-                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
-            elif dig2 == current_video_index:
-                randoms[1] = random.randint(0, len(array_thumbnails) - 1)
-            elif dig1 == current_video_index:
-                randoms[2] = random.randint(0, len(array_thumbnails) - 1)
-            else:
-                break
-            k += 1
-
-        for number in randoms:
-            thumbs_mini.append(array_thumbnails[number])
-
+    thumbs_mini = sample(every_thumbnail_names, 3)
     return render_template('video_display.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini, file_links = file_links_dictionary)
 
 @app.route("/folders/<folder_name>")

@@ -22,18 +22,18 @@
     <div style="position: center;" class="img_container">
         <div class="sample_porn">
             <video width="960px" height="600px" controls style="margin: 20px;">
-                <source src="{{url_for('static', filename='Videos/' + video_name)}}.mp4" type="video/mp4">
+                <source src="{{url_for('static', filename=file_links[video_name] + video_name)}}.mp4" type="video/mp4">
         </div>
         
         <div class="sample_porn">
             <h1 id="desc_para">Recommended for you</h1>
             {% for item in video_thumbs %}
-            <a href="/videos/{{video_names[item]}}">
+            <a href="/videos/{{item}}">
 
                 <div style=" display: inline-block;" class="thumb_container">
-                    <img src="{{url_for('static', filename='Videos/thumbnails/' + item)}}" class="thumbnails">
+                    <img src="{{url_for('static', filename=file_links[item] + 'thumbnails/' + item + '.png')}}" class="thumbnails">
                     </video>
-                    <h1 id="desc_para2">{{video_names[item]}}</h1>
+                    <h1 id="desc_para2">{{item}}</h1>
                 </div>
             </a>
             {% endfor %}
