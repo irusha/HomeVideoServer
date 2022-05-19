@@ -19,13 +19,14 @@
     </a>
     <p id="desc_para">{{video_name}}</p>
 
-    <div style="position: center;" class="img_container">
-        <div class="sample_porn">
-            <video controls id="video_D">
-                <source src="{{url_for('static', filename=file_links[video_name] + video_name)}}.mp4" type="video/mp4">
-            </video>
-        </div>
+    <div class="sample_porn">
+        <video controls id="video_D" height="auto">
+            <source src="{{url_for('static', filename=file_links[video_name] + video_name)}}.mp4" type="video/mp4">
+        </video>
+    </div>
 
+    <div style="position: center;" class="img_container">
+        
         <div class="sample_porn">
             <h1 id="desc_para">Recommended for you</h1>
             {% for item in video_thumbs %}
