@@ -14,20 +14,18 @@
 <body>
     <div class="outer"></div>
     <div class="w3-sidebar w3-bar-block w3-card w3-animate-right"
-        style="display:none;right:0;background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(0.8rem); margin-top: 69.1px; width: 25%;"
+        style="display:none;right:0;background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(0.8rem);"
         id="rightMenu">
 
         <a href="#" class="w3-bar-item w3-button"
             style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-            id="sidebarelements">Your orders <span style="float: right;" class="material-icons" id="ordersico">
-                shopping_bag
-            </span></a>
+            id="sidebarelements">Settings</a>
         <a href="#" class="w3-bar-item w3-button"
             style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-            id="sidebarelements1">Our dealers</a>
+            id="sidebarelements1">Folders</a>
         <a href="#" class="w3-bar-item w3-button"
             style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-            id="sidebarelements2">About us</a>
+            id="sidebarelements2">About</a>
     </div>
     <div class="banner">
         <div class="banner__content" id="banner">
@@ -35,10 +33,11 @@
                 <a href="/m" style="text-decoration-line: none;">
                     <strong id="banner__text">
                         HomeHub</strong></a>
-                <button style="float: right;
-                 margin-left: 20px;
-                    margin-right: 10px; left: -500px;" type="button" onclick="w3_open()" class="button_menu"
-                    id="menub"><span class="material-icons" id="menubicon">menu</span></button>
+                        <button style="float: right;
+                        margin-left: 20px;
+                           margin-right: 10px; left: -500px;" type="button" onclick="w3_open()" class="button_menu"
+                           id="menub">
+                           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
 
             </div>
             <div>
@@ -54,7 +53,7 @@
                 Home porn server</h1>
         </div>
     </a>
-    <p id="desc_para">Your's own porn gallery</p>
+    <p id="desc_para">{{name}}</p>
 
     <div style="position: center;" class="img_container">
         {% for file_pair in file_pairs %}
@@ -83,6 +82,7 @@
     </div>
 
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
+    <script src="{{url_for('static', filename='size_adjust.js')}}"></script>
 
 </body>
 

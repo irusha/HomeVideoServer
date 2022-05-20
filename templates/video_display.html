@@ -57,12 +57,25 @@
     <script>
         var video2 = this.document.getElementById('video_D')
         window.onload = function () {
-            video2.setAttribute('width', document.body.clientWidth - 20)
+		if(document.body.clientWidth > 1200){
+
+		video2.setAttribute('width', document.body.clientWidth - 500)
+}
+	else{
+		video2.setAttribute('width', document.body.clientWidth - 200)
+}
         }
         window.addEventListener("resize", function (event) {
             console.log(document.body.clientWidth + ' wide by ' + document.body.clientHeight + ' high');
 
-            video2.setAttribute('width', document.body.clientWidth - 50)
+            
+	    if(document.body.clientWidth > 1200){
+
+		video2.setAttribute('width', document.body.clientWidth - 500)
+}
+	else{
+		video2.setAttribute('width', document.body.clientWidth - 200)
+}
 
         })
     </script>
