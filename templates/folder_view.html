@@ -18,21 +18,21 @@
                 Home porn server</h1>
         </div>
     </a>
-    <p id="desc_para">Your's own porn gallery</p>
+    <p id="desc_para">{{name}}</p>
 
-    <div style="position: center;" class="img_container">
+    <div style="position: center;" class="img_container_d">
+        <div class="sub_img_container">
         {% for file_pair in file_pairs %}
-        <div class="sample_porn">
             {% for item in file_pair %}
             <a href="/videos/{{video_names[item]}}">
                 <div style=" display: inline-block;" class="thumb_container">
                     <img src="{{url_for('static', filename='Videos/' + name + '/thumbnails/' + item)}}" class="thumbnails">
-                    <h1 id="desc_para2">{{video_names[item]}}</h1>
+                    <h1 class="desc_para2m">{{video_names[item]}}</h1>
                 </div>
             </a>
             {% endfor %}
-        </div>
-        {% endfor %}
+        
+        {% endfor %}</div>
         <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>
         {% for folder in folders %}
         <div>
@@ -46,6 +46,7 @@
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
 
     <script>
+        let container = this.document.getElementsByClassName('sub_img_container')[0];
         window.onload = function(){
             if (
                 navigator.userAgent.match(/Android/i) ||
@@ -55,7 +56,29 @@
                 location.href = "../m/folders/{{name}}"
 
             }
+
+            resizeWindow();
         }
+
+        function resizeWindow (){
+            if (document.body.clientWidth > 1370){
+                container.style.width = "1300px";
+            }
+            else if(document.body.clientWidth < 1370 && document.body.clientWidth > 1045){
+                container.style.width = "970px";
+            }
+            else if(document.body.clientWidth < 1045 && document.body.clientWidth > 721){
+                container.style.width = "645px";
+            }
+            else if(document.body.clientWidth < 721){
+                container.style.width = "308px";
+            }
+
+        }
+
+        window.addEventListener("resize", function (event) {
+            resizeWindow();
+        })
     </script>
 
 </body>
