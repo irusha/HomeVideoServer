@@ -71,8 +71,7 @@
     <p id="desc_para">{{name}}</p>
 
     <div style="position: center;" class="img_container">
-        {% for file_pair in file_pairs %}
-        {% for item in file_pair %}
+        {% for item in files %}
         <a href="/m/videos/{{video_names[item]}}">
             <div class="m_thumb_container">
                 <img src="{{url_for('static', filename='Videos/' + name + '/thumbnails/' + item)}}"
@@ -81,7 +80,6 @@
                 </h1>
             </div>
         </a>
-        {% endfor %}
         {% endfor %}
 
         <div id="folders">

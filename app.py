@@ -131,12 +131,11 @@ def hello_world():
     array_thumbnails = get_thumbnails(videos_folder)
     for thumbName in get_thumbnails("\\static\\Videos"):
         get_video_name[thumbName] = get_file_name(thumbName)
-    thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
-    return render_template('index.html', file_pairs = thumbs_pairs, video_names = get_video_name, folders = get_folders('Videos'))
+    return render_template('index.html', files = array_thumbnails, video_names = get_video_name, folders = get_folders('Videos'))
 
 @app.route("/videos/<video_name>")
 def video_display(video_name):
-    thumbs_mini = sample(every_thumbnail_names, 3)
+    thumbs_mini = sample(every_thumbnail_names, 4)
     return render_template('video_display.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini, file_links = file_links_dictionary, folders = get_folders('Videos'))
 
 @app.route("/folders/<folder_name>")
@@ -146,8 +145,7 @@ def folder_display(folder_name):
     array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
     for thumbName in array_thumbnails:
         get_video_name[thumbName] = get_file_name(thumbName)
-    thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
-    return render_template('folder_view.html', name = folder_name, file_pairs = thumbs_pairs, video_names = get_video_name, folders = get_folders('Videos'))
+    return render_template('folder_view.html', name = folder_name, files = array_thumbnails, video_names = get_video_name, folders = get_folders('Videos'))
 
 @app.route("/m")
 def m_index():
@@ -156,8 +154,7 @@ def m_index():
     array_thumbnails = get_thumbnails(videos_folder)
     for thumbName in get_thumbnails("\\static\\Videos"):
         get_video_name[thumbName] = get_file_name(thumbName)
-    thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
-    return render_template('index_m.html', file_pairs = thumbs_pairs, video_names = get_video_name, folders = get_folders('Videos'))
+    return render_template('index_m.html', files = array_thumbnails, video_names = get_video_name, folders = get_folders('Videos'))
     
 @app.route("/m/folders/<folder_name>")
 def folder_display_m(folder_name):
@@ -166,11 +163,10 @@ def folder_display_m(folder_name):
     array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
     for thumbName in array_thumbnails:
         get_video_name[thumbName] = get_file_name(thumbName)
-    thumbs_pairs = [array_thumbnails[x:x+3] for x in range(0, len(array_thumbnails), 3)]
-    return render_template('folder_view_m.html', name = folder_name, file_pairs = thumbs_pairs, video_names = get_video_name, folders = get_folders('Videos'))
+    return render_template('folder_view_m.html', name = folder_name, files = array_thumbnails, video_names = get_video_name, folders = get_folders('Videos'))
 
 @app.route("/m/videos/<video_name>")
 def video_display_m(video_name):
-    thumbs_mini = sample(every_thumbnail_names, 3)
+    thumbs_mini = sample(every_thumbnail_names, 4)
     return render_template('video_display_m.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini, file_links = file_links_dictionary, folders = get_folders('Videos'))
 

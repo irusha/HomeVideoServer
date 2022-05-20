@@ -27,12 +27,12 @@
 
     <div style="position: center;" class="img_container_d">
 
-        <div class="centered_cont">
+        <div class="sub_img_container">
             <h1 id="desc_para">Recommended for you</h1>
             {% for item in video_thumbs %}
             <a href="/videos/{{item}}">
 
-                <div style=" display: inline-block;" class="thumb_container">
+                <div class="thumb_container">
                     <img src="{{url_for('static', filename=file_links[item] + 'thumbnails/' + item + '.png')}}"
                         class="thumbnails">
 
@@ -57,6 +57,7 @@
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
 
     <script>
+        let container = this.document.getElementsByClassName('sub_img_container')[0];
         var video2 = this.document.getElementById('video_D')
         window.onload = function () {
             if (
@@ -69,25 +70,42 @@
             }
             if (document.body.clientWidth > 1200) {
 
-                video2.setAttribute('width', document.body.clientWidth - 500)
+                video2.setAttribute('width', document.body.clientWidth - 500);
             }
             else {
-                video2.setAttribute('width', document.body.clientWidth - 200)
+                video2.setAttribute('width', document.body.clientWidth - 200);
             }
+            resizeWindow();
         }
         window.addEventListener("resize", function (event) {
             console.log(document.body.clientWidth + ' wide by ' + document.body.clientHeight + ' high');
-
+            resizeWindow();
 
             if (document.body.clientWidth > 1200) {
 
-                video2.setAttribute('width', document.body.clientWidth - 500)
+                video2.setAttribute('width', document.body.clientWidth - 500);
             }
             else {
-                video2.setAttribute('width', document.body.clientWidth - 200)
+                video2.setAttribute('width', document.body.clientWidth - 200);
             }
 
         })
+
+        function resizeWindow() {
+            if (document.body.clientWidth > 1370) {
+                container.style.width = "1300px";
+            }
+            else if (document.body.clientWidth < 1370 && document.body.clientWidth > 1045) {
+                container.style.width = "970px";
+            }
+            else if (document.body.clientWidth < 1045 && document.body.clientWidth > 721) {
+                container.style.width = "645px";
+            }
+            else if (document.body.clientWidth < 721) {
+                container.style.width = "308px";
+            }
+
+        }
 
     </script>
 </body>
