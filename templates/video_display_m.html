@@ -35,9 +35,24 @@
                         HomeHub</strong></a>
                 <button style="float: right;
                  margin-left: 20px;
-                    margin-right: 10px; left: -500px;" type="button" onclick="w3_open()" class="button_menu"
+                    margin-right: 0px; left: -500px;" type="button" onclick="w3_open()" class="button_menu"
                     id="menub">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                        fill="#FFFFFF">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path id="menu_button" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                    </svg></button>
+
+                <button style="float: right;
+                    margin-left: 20px;
+                       margin-right: 10px; left: -500px;" type="button" onclick="scroll_to_folders()"
+                    class="button_menu" id="menub">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                        fill="#FFFFFF">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
+                    </svg></button>
 
             </div>
             <div>
@@ -74,15 +89,17 @@
             </a>
             {% endfor %}
         </div>
-        <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>
-        {% for folder in folders %}
-        <div>
-            <li id="folderlist">
-                <a id="folderlist_cont" href="/m/folders/{{folder}}">
-                    {{folder}}</a>
-            </li>
+        <div id="folders">
+            <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>
+            {% for folder in folders %}
+            <div>
+                <li id="folderlist">
+                    <a id="folderlist_cont" href="/m/folders/{{folder}}">
+                        {{folder}}</a>
+                </li>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
     <p id="desc_para">Designed with love by Irusha Sansuka</p>

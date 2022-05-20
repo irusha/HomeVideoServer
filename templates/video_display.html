@@ -26,7 +26,7 @@
     </div>
 
     <div style="position: center;" class="img_container">
-        
+
         <div class="sample_porn">
             <h1 id="desc_para">Recommended for you</h1>
             {% for item in video_thumbs %}
@@ -42,14 +42,16 @@
             {% endfor %}
         </div>
         <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>
-        {% for folder in folders %}
-        <div>
-            <li id="folderlist">
-                <a id="folderlist_cont" href="/folders/{{folder}}">
-                    {{folder}}</a>
-            </li>
+        <div id="folders">
+            {% for folder in folders %}
+            <div>
+                <li id="folderlist">
+                    <a id="folderlist_cont" href="/folders/{{folder}}">
+                        {{folder}}</a>
+                </li>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
@@ -57,25 +59,25 @@
     <script>
         var video2 = this.document.getElementById('video_D')
         window.onload = function () {
-		if(document.body.clientWidth > 1200){
+            if (document.body.clientWidth > 1200) {
 
-		video2.setAttribute('width', document.body.clientWidth - 500)
-}
-	else{
-		video2.setAttribute('width', document.body.clientWidth - 200)
-}
+                video2.setAttribute('width', document.body.clientWidth - 500)
+            }
+            else {
+                video2.setAttribute('width', document.body.clientWidth - 200)
+            }
         }
         window.addEventListener("resize", function (event) {
             console.log(document.body.clientWidth + ' wide by ' + document.body.clientHeight + ' high');
 
-            
-	    if(document.body.clientWidth > 1200){
 
-		video2.setAttribute('width', document.body.clientWidth - 500)
-}
-	else{
-		video2.setAttribute('width', document.body.clientWidth - 200)
-}
+            if (document.body.clientWidth > 1200) {
+
+                video2.setAttribute('width', document.body.clientWidth - 500)
+            }
+            else {
+                video2.setAttribute('width', document.body.clientWidth - 200)
+            }
 
         })
     </script>
