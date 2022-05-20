@@ -20,12 +20,20 @@
         <a href="#" class="w3-bar-item w3-button"
             style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
             id="sidebarelements">Settings </a>
-        <a href="#" class="w3-bar-item w3-button"
-            style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-            id="sidebarelements1">Folders</a>
+
         <a href="#" class="w3-bar-item w3-button"
             style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
             id="sidebarelements2">About</a>
+        <p class="w3-bar-item w3-button dropdown-btn"
+            style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+            id="sidebarelements1">Folders</p>
+        <div class="dropdown-container">
+            {% for folder in folders %}
+            <div>
+                <div><a href="/m/folders/{{folder}}" class="dd_item w3-button">{{folder}}</a></div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
     <div class="banner">
         <div class="banner__content" id="banner">
@@ -35,8 +43,7 @@
                         HomeHub</strong></a>
                 <button style="float: right;
                  margin-left: 20px;
-                    margin-right: 0px; left: -500px;" type="button" onclick="w3_open()" class="button_menu"
-                    id="menub">
+                    margin-right: 0px; left: -500px;" type="button" onclick="w3_open()" class="button_menu" id="menub">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
                         fill="#FFFFFF">
                         <path d="M0 0h24v24H0z" fill="none" />

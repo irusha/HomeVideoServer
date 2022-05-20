@@ -83,7 +83,6 @@ body {
     margin: 10px;
     padding-top: 10px;
     border-radius: 20px;
-    backdrop-filter: blur(4px);
     padding-bottom: 30px;
     background-color: rgba(0, 0, 0, 0.45);
 }
@@ -93,7 +92,6 @@ body {
     margin: 30px;
     padding-top: 30px;
     border-radius: 20px;
-    backdrop-filter: blur(4px);
     width: auto;
     padding-bottom: 30px;
     background-color: rgba(0, 0, 0, 0.45);
@@ -162,3 +160,20 @@ body {
     width: max-content;
     height: max-content;
 }
+
+.dropdown-container {
+    display: none;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: beige;
+    text-decoration-line: none;
+    padding-left: 10px;
+  }
+
+.dd_item{
+    text-decoration: none;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+ 
