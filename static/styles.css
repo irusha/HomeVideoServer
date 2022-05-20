@@ -55,13 +55,13 @@ body {
 .thumb_container {
     width: 350px;
     height: 280px;
-    margin: 15px;
+    margin: 0px;
 }
 
 .m_thumb_container {
     width: 350px;
     height: auto;
-    margin: auto;
+    margin: 10px;
 }
 
 .img_container {

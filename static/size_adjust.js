@@ -1,16 +1,56 @@
 let video = this.document.getElementById('video_m')
+let thumbnails = this.document.getElementsByClassName('m_thumb_container')
 window.onload = function () {
+
   try {
+    if (document.body.clientWidth > 540) {
+      for (let index = 0; index < thumbnails.length; index++) {
+        const element = thumbnails[index];
+        element.style.width = document.body.clientWidth - 60 + "px"
+        element.style.margin = "20px";
+      }
+      
+    }
+    else{
+      for (let index = 0; index < thumbnails.length; index++) {
+        const element = thumbnails[index];
+        element.style.width = document.body.clientWidth - 40 + "px"
+        element.style.margin = "10px";
+      }
+    }
+
     video.setAttribute('width', document.body.clientWidth - 20)
+
   } catch (error) {
-    
+
   }
-  
+
 }
 window.addEventListener("resize", function (event) {
   console.log(document.body.clientWidth + ' wide by ' + document.body.clientHeight + ' high');
 
-  video.setAttribute('width', document.body.clientWidth - 20)
+  try {
+    if (document.body.clientWidth > 540) {
+      for (let index = 0; index < thumbnails.length; index++) {
+        const element = thumbnails[index];
+        element.style.width = document.body.clientWidth - 60 + "px"
+        element.style.margin = "20px";
+      }
+      
+    }
+    else{
+      for (let index = 0; index < thumbnails.length; index++) {
+        const element = thumbnails[index];
+        element.style.width = document.body.clientWidth - 40 + "px"
+        element.style.margin = "10px";
+      }
+    }
+
+    video.setAttribute('width', document.body.clientWidth - 20)
+
+  } catch (error) {
+
+  }
 
 })
 

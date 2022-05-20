@@ -59,6 +59,14 @@
     <script>
         var video2 = this.document.getElementById('video_D')
         window.onload = function () {
+            if (
+                navigator.userAgent.match(/Android/i) ||
+                navigator.userAgent.match(/iPhone/i)
+            ) {
+                console.log("You are on mobile view")
+                location.href = "../m/videos/{{video_name}}"
+
+            }
             if (document.body.clientWidth > 1200) {
 
                 video2.setAttribute('width', document.body.clientWidth - 500)
@@ -80,6 +88,7 @@
             }
 
         })
+
     </script>
 </body>
 

@@ -45,6 +45,19 @@
 
     <p id="desc_para">Designed with love by Irusha Sansuka</p>
 
+    <script>
+        window.onload = function(){
+            if (
+                navigator.userAgent.match(/Android/i) ||
+                navigator.userAgent.match(/iPhone/i)
+            ) {
+                console.log("You are on mobile view")
+                location.href = "../m/folders/{{name}}"
+
+            }
+        }
+    </script>
+
 </body>
 
 </html>
