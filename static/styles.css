@@ -176,4 +176,29 @@ body {
     margin-right: 15px;
 }
 
- 
+.pages-icon-holder {
+    margin: auto;
+    width: fit-content;
+    max-width: 400px;
+}
+
+.pages-icon-text {
+    color: aliceblue;
+    text-align: center;
+    margin-top: 3px;
+    width: 40px;
+    height: max-content;
+}
+
+.pages-icon {
+    background-color: rgba(92, 85, 85, 0.425);
+    display: inline-flex;
+    width: 40px;
+    margin: 6px;
+    padding: 2px;
+    height: 40px;
+    border-color: rgb(135, 123, 123);
+    border-width: 3px;
+    border-style: dashed;
+    border-radius: 10px;
+}

@@ -89,6 +89,24 @@
             </div>
         </a>
         {% endfor %}
+        <div style="width: fit-content; padding-left: 20px; padding-right: 20px; margin-left: auto; margin-right: auto; text-align: center;">
+
+            <div class="pages-icon-holder">
+                {% for page in range(1, pages) %}
+                {% if page == curr_page %}
+                <div class="pages-icon" style="background-color: rgba(223, 220, 220, 0.723);">
+                    <p class="pages-icon-text" style="color: rgb(45, 42, 42)">{{page}}</p>
+                </div>
+                
+                {% else %}
+                <a href="/m/folders/{{name}}/page{{page}}">
+                <div class="pages-icon">
+                    <p class="pages-icon-text">{{page}}</p>
+                </div></a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
 
         <div id="folders">
             <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>
