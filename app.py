@@ -184,9 +184,10 @@ def folder_display_m(folder_name):
         cleanup_thumbs(videos_folder + folder_name + "\\")
         generate_thumbs(videos_folder + folder_name + "\\")
         array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
+        thumb_groups = [array_thumbnails[x:x+items_per_page] for x in range(0, len(array_thumbnails), items_per_page)]
         for thumbName in array_thumbnails:
             get_video_name[thumbName] = get_file_name(thumbName)
-        return render_template('folder_view_m.html', name = folder_name, files = array_thumbnails, video_names = get_video_name, folders = get_folders('Videos'))
+        return render_template('folder_view_m.html', name = folder_name, files = thumb_groups[0], video_names = get_video_name, folders = get_folders('Videos'), pages =len(thumb_groups) - 1)
     except:
         return render_template('404_error.html')
 
@@ -198,6 +199,33 @@ def video_display_m(video_name):
     else:
         return render_template('404_error.html')
 
+
 @app.route("/m/page<number>")
 def pages_home(number):
-    return number
+    array_thumbnails = get_thumbnails(videos_folder)
+    thumb_groups = [array_thumbnails[x:x+items_per_page] for x in range(0, len(array_thumbnails), items_per_page)]
+    try:
+        if int(number) >= len(thumb_groups):
+            return render_template('404_error.html')
+        else:    
+            cleanup_thumbs(videos_folder)
+            generate_thumbs(videos_folder)
+            for thumbName in get_thumbnails("\\static\\Videos"):
+                get_video_name[thumbName] = get_file_name(thumbName)
+            return render_template('index_m.html', files = thumb_groups[int(number) - 1], video_names = get_video_name, folders = get_folders('Videos'), pages =len(thumb_groups) - 1)
+    except:
+        return render_template('404_error.html')
+
+
+@app.route("/m/folders/<folder_name>/page<number>")
+def pages_folders(folder_name, number):
+    try:
+        cleanup_thumbs(videos_folder + folder_name + "\\")
+        generate_thumbs(videos_folder + folder_name + "\\")
+        array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
+        thumb_groups = [array_thumbnails[x:x+items_per_page] for x in range(0, len(array_thumbnails), items_per_page)]
+        for thumbName in array_thumbnails:
+            get_video_name[thumbName] = get_file_name(thumbName)
+        return render_template('folder_view_m.html', name = folder_name, files = thumb_groups[int(number) - 1], video_names = get_video_name, folders = get_folders('Videos'), pages =len(thumb_groups) - 1 )
+    except:
+        return render_template('404_error.html')
