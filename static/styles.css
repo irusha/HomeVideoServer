@@ -45,7 +45,7 @@ body {
     position: relative;
     margin: 0;
     /*background: rgba(0, 0, 0, 0.4) url(background.jpg);*/
-    background: black;
+    background: rgb(49, 48, 48);
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -100,7 +100,7 @@ body {
     padding-top: 10px;
     border-radius: 20px;
     padding-bottom: 30px;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .img_container_d {
@@ -110,7 +110,7 @@ body {
     border-radius: 20px;
     width: auto;
     padding-bottom: 30px;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 #folderlist {
@@ -217,4 +217,8 @@ body {
     border-width: 3px;
     border-style: dashed;
     border-radius: 10px;
+}
+
+a{
+    text-decoration: none;
 }

@@ -14,8 +14,8 @@ window.onload = function () {
     else{
       for (let index = 0; index < thumbnails.length; index++) {
         const element = thumbnails[index];
-        element.style.width = document.body.clientWidth - 40 + "px"
-        element.style.margin = "10px";
+        element.style.width = document.body.clientWidth - 20 + "px"
+        element.style.margin = "0px";
       }
     }
 
@@ -41,8 +41,8 @@ window.addEventListener("resize", function (event) {
     else{
       for (let index = 0; index < thumbnails.length; index++) {
         const element = thumbnails[index];
-        element.style.width = document.body.clientWidth - 40 + "px"
-        element.style.margin = "10px";
+        element.style.width = document.body.clientWidth - 20 + "px"
+        element.style.margin = "0px";
       }
     }
 
