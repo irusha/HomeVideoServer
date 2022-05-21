@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - HomeHub</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .paragraph {
+            color: white;
+            margin: auto;
+            text-align: justify;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        }
+
+        .link {
+            color: rgb(249, 185, 112);
+            margin: 20px;
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        }
+
+        #desc_para {
+            color: rgb(250, 252, 253);
+            font-size: large;
+            margin-left: 20px;
+            width: 300px;
+            size: 20px;
+            height: max-content;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .code{
+            color: darksalmon;
+            text-align: center;
+            font-style: italic;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+    <a href="/home" style="text-decoration-line: none;">
+    <h1
+        style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; font-size: 40px; text-decoration: none;">
+        HomeHub</h1></a>
+    <p id="desc_para">Home Video server</p>
+    <h2
+        style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; text-decoration: none;">
+        About</h2>
+    <div style="margin: 20px">
+        <p class="paragraph">HomeHub - Home video server is made to display your videos at a style.
+            This program can order your files and display them like a video hosting site. It can also recommend you
+            videos from your video folder.
+        </p>
+    </div>
+
+
+    <div style="margin: 20px">
+        <p class="paragraph">
+            Ths Program is written with python for backend and as a server (Uses Flask library), CSS, HTML, Js for the
+            front end.
+            This program is optimzed for both desktops and mobiles with a separate mobile view. This is an open source
+            software. So anybody can modify and use this software without my consent. The code is not very complex.
+            I think anyone can easily modify this code.
+        </p>
+    </div>
+    </br>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; text-decoration: none;">How to use this software?
+    </h3>
+    <div style="margin: 20px"><p class="paragraph">
+        First you have to install flask library and ffmpy library from pip. For that use,
+    </p></div>
+    <div style="margin: 20px"><p class="code">"pip install flask"</p></div>
+    <div style="margin: 20px"><p class="code">"pip install ffmpy"</p></div>
+    <div style="margin: 20px"><p class="paragraph">
+        In here the ffmpy library is used to get the thumbnails of the images. The 'ffmpeg.exe' inside the main
+        folder is compulsory for this program to run. 
+    </p></div>
+    <div style="margin: 20px"><p class="paragraph">
+        After finish installing the above libraries, open a command window inside the the folder which contains
+        'app.py' and then enter <span style='color:darksalmon; font-style: italic;'>"flask run"</span> command. You will now
+        see the ip address to access your server.
+    </p></div>
+</br>
+<h3 style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; text-decoration: none;">Important things to know
+</h3>
+<div style="margin: 20px"><li class="paragraph">
+    You have to copy all of your videos to be displayed into <span style='color:darksalmon; font-style: italic;'>"/static/Videos"</span> folder.
+    Otherwise we won't able to find them.
+</li>
+</div>
+
+<div style="margin: 20px"><li class="paragraph">
+    Due to a limitation of this program, you shouldn't make another <span style="color: rgb(84, 221, 134);">"Videos"</span> folder inside the 
+    <span style="color: rgb(84, 221, 134);">"Videos"</span> folder. 
+</li>
+</div>
+<div style="margin: 20px"><li class="paragraph">
+    This program never connects to the internet (Refer the code). So we can guarantee a 100% privace protectiton.
+</li>
+</div>
+</br>
+<h3 style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; text-decoration: none;">Credits
+</h3>
+<div style="margin: 20px"><li class="paragraph">
+   PalletsProject for flask <a href="https://flask.palletsprojects.com/en" style="text-decoration: none;">Link to flask</a>
+</li>
+</div>
+<div style="margin: 20px"><li class="paragraph">
+Google for the icons    
+</li>
+</div>
+<div style="margin: 20px"><li class="paragraph">
+   ffmpy for the image converting library <a href="https://ffmpy.readthedocs.io/en/latest/" style="text-decoration: none;">Link</a>
+</li>
+</div>
+
+<div style="margin: 20px"><li class="paragraph">
+   IconScout/Twitter Emoji for the favicon
+</li>
+</div>
+</br>
+
+<h3 style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; text-decoration: none;">Developer
+</h3>
+
+<div style="margin: 20px"><p class="paragraph">
+    Irusha Sansuka (Amateur programmer)
+</p></div>
+</br>
+<a href="https://www.github.com/irusha/HomeVideoServer" class="link">Project Page</a>
+<a href="https://www.github.com/irusha" class="link">My github Page</a>
+
+<div style="margin: 20px"><p class="paragraph">
+    Email: irushaathukorala@gmail.com
+</p>
+ </div>
+</body>
+
+</html>
