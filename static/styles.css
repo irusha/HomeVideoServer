@@ -223,6 +223,11 @@ a {
     text-decoration: none;
 }
 
+.bottomText{
+    color: bisque;
+    padding-right: 20px;
+}
+
 .hideTag {
     display: none;
 }
