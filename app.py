@@ -137,6 +137,7 @@ for curr_ind in range(0, len(every_thumbnail_names)):
                           ] = every_video_path[curr_ind]
 
 
+
 @app.route("/")
 @app.route("/home")
 def hello_world():
@@ -271,9 +272,10 @@ def upload_file():
     if request.method == 'POST':
         f = request.files['file']
         folder = request.form['curr_folder']
+
         split_fname = f.filename.split('.')
         extension = split_fname[len(split_fname) - 1]
-        folder_path = "static/Videos/" + f.filename if folder == 'home555412581__7aas' else "static/Videos/" + folder + "/" +f.filename
+        folder_path = "Videos/" if folder == 'home555412581__7aas' else "Videos/" + folder + "/"
         print(folder_path)
 
         split_fname = f.filename.split('.')
@@ -283,7 +285,8 @@ def upload_file():
             return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
 
         else:
-            f.save(folder_path)
+            f.save('static/' + folder_path + f.filename)
+            file_links_dictionary[str(get_file_name(f.filename))] = folder_path
             return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
 
 
@@ -295,12 +298,13 @@ def upload_file_m():
 
         split_fname = f.filename.split('.')
         extension = split_fname[len(split_fname) - 1]
-        folder_path = "static/Videos/" + f.filename if folder == 'home555412581__7aas' else "static/Videos/" + folder + "/" +f.filename
+        folder_path = "Videos/" if folder == 'home555412581__7aas' else "Videos/" + folder + "/"
         print(folder_path)
         if extension != 'mp4':
             print("Invalid file")
             return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
 
         else:
-            f.save(folder_path)
+            f.save('static/' + folder_path + f.filename)
+            file_links_dictionary[str(get_file_name(f.filename))] = folder_path
             return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
