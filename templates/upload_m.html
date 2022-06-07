@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
+   <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+   <link rel="stylesheet" href="{{url_for('static', filename='w3themes.css')}}">
+   <title>HomeHub</title>
+</head>
+
+<body>
+   <div class="outer"></div>
+   <div class="w3-sidebar w3-bar-block w3-card w3-animate-right"
+      style="display:none;right:0;background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(0.8rem);" id="rightMenu">
+
+      <a href="/about" class="w3-bar-item w3-button"
+         style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+         id="sidebarelements">About </a>
+
+      <p class="w3-bar-item w3-button dropdown-btn"
+         style="color: aliceblue; background-color: rgba(0, 0, 0, 0.1); padding: 15px; padding-left: 20px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+         id="sidebarelements1">Folders</p>
+      <div class="dropdown-container">
+         {% for folder in folders %}
+         <div>
+            <div><a href="/m/folders/{{folder}}" class="dd_item w3-button">{{folder}}</a></div>
+         </div>
+         {% endfor %}
+      </div>
+   </div>
+   <div class="banner">
+      <div class="banner__content" id="banner">
+         <div class="banner__text">
+            <a href="/m" style="text-decoration-line: none;">
+               <strong id="banner__text">
+                  HomeHub</strong></a>
+            <button style="float: right;
+                    margin-left: 20px;
+                       margin-right: 0px; left: -500px;" type="button" onclick="w3_open()" class="button_menu"
+               id="menub">
+               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path id="menu_button" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+               </svg></button>
+            <button style="float: right;
+                    margin-left: 20px;
+                       margin-right: 10px; left: -500px;" type="button" onclick="scroll_to_folders()"
+               class="button_menu" id="menub">
+               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                  <path d="M0 0h24v24H0V0z" fill="none" />
+                  <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" />
+               </svg></button>
+
+         </div>
+         <div>
+         </div>
+      </div>
+   </div>
+
+   <a href="/home" style="text-decoration-line: none;">
+      <div>
+         <h1
+            style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; font-size: 40px; text-decoration: none;">
+            Upload files <span>
+
+            </span></h1>
+      </div>
+   </a>
+
+
+
+   <div style="position: center;" class="img_container">
+
+
+      <form action="/m/uploader" method="POST" enctype="multipart/form-data" style="padding-left: 20px;">
+         <!-- <input class="fileChooser" type="file" name="file" /> -->
+         <label for="inputTag">
+            <h1 class="inpulLabel">Select a Video 📽</h1>
+            <h3 id="videoName">...</h3>
+            <input class="hideTag" id="inputTag" type="file" name="file" />
+         </label>
+
+         <h4 style="color: aliceblue;">Folders</h4>
+         <input type="radio" id="home555412581__7aas" name="curr_folder" value="home555412581__7aas">
+         <label for="home555412581__7aas">Home folder</label><br>
+         {% for folder in folders %}
+         <input type="radio" id="{{folder}}" name="curr_folder" value="{{folder}}">
+         <label for="{{folder}}">{{folder}}</label><br>
+
+         {% endfor %}
+
+
+         <label for="submitBut">
+            <h1 style="height: 48px;">Upload
+               <svg style="padding-top: 10px;" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
+                  height="48px" viewBox="0 0 24 24" width="48px" fill="#FFFFFF">
+                  <g>
+                     <rect fill="none" height="24" width="24" />
+                  </g>
+                  <g>
+                     <path
+                        d="M18,15v3H6v-3H4v3c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-3H18z M7,9l1.41,1.41L11,7.83V16h2V7.83l2.59,2.58L17,9l-5-5L7,9z" />
+                  </g>
+               </svg>
+            </h1>
+            <input class="hideTag" id="submitBut" type="submit" />
+         </label>
+      </form>
+
+      {% if isValid == 1 %}
+      <p style="color: red; padding: 20px;">Invalid file</p>
+      {% elif isValid == 2 %}
+      <p style="color: rgb(17, 204, 17); padding: 20px;">Success</p>
+      {% else %}
+      <p></p>
+      {% endif %}
+
+      </br>
+
+   </div>
+
+   <script>
+      let input = document.getElementById("inputTag");
+      let imageName = document.getElementById("videoName")
+      let homeRB = document.getElementById('home555412581__7aas')
+
+      homeRB.checked = true
+
+      input.addEventListener("change", () => {
+         let inputImage = document.querySelector("input[type=file]").files[0];
+
+         imageName.innerText = inputImage.name;
+      })
+   </script>
+
+   <p id="m_about_txt">Designed with love by Irusha Sansuka</p>
+   <script src="{{url_for('static', filename='size_adjust.js')}}"></script>
+
+</body>
+
+</html>

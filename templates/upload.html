@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='w3themes.css')}}">
+    <title>HomeHub</title>
+</head>
+
+<body>
+
+    <a href="/home" style="text-decoration-line: none;">
+        <div>
+            <h1
+                style="font-family: Arial, Helvetica, sans-serif; orientation: center; color: rgb(250, 252, 253); margin-left: 20px; font-size: 40px; text-decoration: none;">
+                Upload files <span>
+
+                </span></h1>
+        </div>
+    </a>
+
+
+
+    <div style="position: center;" class="img_container">
+
+
+        <form action="/uploader" method="POST" enctype="multipart/form-data" style="padding-left: 20px;">
+            <!-- <input class="fileChooser" type="file" name="file" /> -->
+            <div>
+                <label for="inputTag" style="display: inline-block;">
+
+                    <h1 class="inpulLabel">Select a Video 📽</h1>
+                    <h3 id="videoName">...</h3>
+                    <input class="hideTag" id="inputTag" type="file" name="file" />
+                </label>
+
+                <h4 style="color: aliceblue;">Folders</h4>
+                <input type="radio" id="home555412581__7aas" name="curr_folder" value="home555412581__7aas">
+                <label for="home555412581__7aas">Home folder</label><br>
+                {% for folder in folders %}
+                <input type="radio" id="{{folder}}" name="curr_folder" value="{{folder}}">
+                <label for="{{folder}}">{{folder}}</label><br>
+
+                {% endfor %}
+            </div>
+
+            <div>
+
+                <label for="submitBut" style="display: inline-block;">
+                    <h1 style="height: 48px;">Upload
+                        <svg style="padding-top: 10px;" xmlns="http://www.w3.org/2000/svg"
+                            enable-background="new 0 0 24 24" height="48px" viewBox="0 0 24 24" width="48px"
+                            fill="#FFFFFF">
+                            <g>
+                                <rect fill="none" height="24" width="24" />
+                            </g>
+                            <g>
+                                <path
+                                    d="M18,15v3H6v-3H4v3c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-3H18z M7,9l1.41,1.41L11,7.83V16h2V7.83l2.59,2.58L17,9l-5-5L7,9z" />
+                            </g>
+                        </svg>
+                    </h1>
+                    <input class="hideTag" id="submitBut" type="submit" />
+                </label>
+            </div>
+        </form>
+
+        {% if isValid == 1 %}
+        <p style="color: red; padding: 20px;">Invalid file</p>
+        {% elif isValid == 2 %}
+        <p style="color: rgb(17, 204, 17); padding: 20px;">Success</p>
+        {% else %}
+        <p></p>
+        {% endif %}
+
+        </br>
+
+    </div>
+
+    <script>
+        let input = document.getElementById("inputTag");
+        let imageName = document.getElementById("videoName")
+        let homeRB = document.getElementById('home555412581__7aas')
+
+        homeRB.checked = true
+
+        input.addEventListener("change", () => {
+            let inputImage = document.querySelector("input[type=file]").files[0];
+
+            imageName.innerText = inputImage.name;
+        })
+    </script>
+
+    <p id="m_about_txt">Designed with love by Irusha Sansuka</p>
+    <script src="{{url_for('static', filename='size_adjust.js')}}"></script>
+
+</body>
+
+</html>

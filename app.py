@@ -1,6 +1,6 @@
 from asyncio.windows_events import NULL
 from posixpath import split
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import os
 from ffmpy import FFmpeg
 from pathlib import Path
@@ -10,6 +10,8 @@ videos_folder = "\\static\\Videos\\"
 items_per_page = 15
 
 app = Flask(__name__)
+
+
 def get_files(directory):
     path = os.getcwd() + directory
     filess = os.listdir(path)
@@ -38,12 +40,13 @@ def get_folders(current_folder):
 def get_file_name(file):
     return Path(file).stem
 
+
 get_video_name = {}
 
 
-#folder_path is the folder that contains the videos
-#By default, thumbnails folder automatically created in static\Videos
-#Returns the thumbnails of the videos inside the folder that is given to folder_path argument
+# folder_path is the folder that contains the videos
+# By default, thumbnails folder automatically created in static\Videos
+# Returns the thumbnails of the videos inside the folder that is given to folder_path argument
 def get_thumbnails(folder_path):
     thumb_folder = os.getcwd() + folder_path + "\\thumbnails"
     if os.path.exists(thumb_folder) == False:
@@ -57,18 +60,18 @@ def get_thumbnails(folder_path):
     return final_file_list
 
 
-#folder_path is the folder that contains the videos
-#Function cleans up unnecessary thumbnails
+# folder_path is the folder that contains the videos
+# Function cleans up unnecessary thumbnails
 def cleanup_thumbs(folder_path):
     for thumbnail in get_thumbnails(folder_path):
         path = os.getcwd() + folder_path
         video_name = path + get_file_name(thumbnail) + ".mp4"
         if os.path.exists(video_name) == False:
             os.remove(path + "thumbnails\\" + thumbnail)
-    
 
-#Function generates thumbnails for the videos inside the given folder_path
-#Thumbnails are stored in the folder "thumbnails"
+
+# Function generates thumbnails for the videos inside the given folder_path
+# Thumbnails are stored in the folder "thumbnails"
 def generate_thumbs(folder_path):
     filesList = get_files(folder_path)
     videos = get_files_with_extension(filesList, 'mp4')
@@ -79,11 +82,12 @@ def generate_thumbs(folder_path):
         if os.path.exists(thumbnail_name) == False:
             videoN = path + video
             print(thumbnail_name)
-            ff = FFmpeg(inputs={videoN: None}, outputs={thumbnail_name: ['-ss', '00:00:20', '-vframes', '1']})
+            ff = FFmpeg(inputs={videoN: None}, outputs={
+                        thumbnail_name: ['-ss', '00:00:20', '-vframes', '1']})
             ff.run()
 
 
-#First we have to clean up thumbnails of the old videos and generate thumbnails for new videos
+# First we have to clean up thumbnails of the old videos and generate thumbnails for new videos
 for folder in get_folders('Videos'):
     cleanup_thumbs(videos_folder + folder + "\\")
     generate_thumbs(videos_folder + folder + "\\")
@@ -98,25 +102,25 @@ for thumbName in get_thumbnails(videos_folder):
     get_video_name[thumbName] = get_file_name(thumbName)
 
 
-#Search for every file in the directory
+# Search for every file in the directory
 list_of_every_file = []
 for root, dirs, files in os.walk(os.getcwd() + "\\" + videos_folder):
-	for file in files:
-        #append the file name to the list
-		list_of_every_file.append(os.path.join(root,file))
+    for file in files:
+        # append the file name to the list
+        list_of_every_file.append(os.path.join(root, file))
 
 
-#clean up files list to only contain .png fies
+# clean up files list to only contain .png fies
 every_thumbnail_paths = get_files_with_extension(list_of_every_file, 'png')
 
 
-#Get a list that contains only the file names
+# Get a list that contains only the file names
 every_thumbnail_names = []
 for curr_path in every_thumbnail_paths:
     every_thumbnail_names.append(str(get_file_name(curr_path)))
 
 
-#Get the path of the video
+# Get the path of the video
 every_video_path = []
 for curr_path in every_thumbnail_paths:
     splitPath = curr_path.split("\\")
@@ -126,10 +130,11 @@ for curr_path in every_thumbnail_paths:
         every_video_path.append("Videos/" + splitPath[len(splitPath)-3] + "/")
 
 
-#Add the file name and relevent path to a dictionary
+# Add the file name and relevent path to a dictionary
 file_links_dictionary = {}
 for curr_ind in range(0, len(every_thumbnail_names)):
-    file_links_dictionary[every_thumbnail_names[curr_ind]] = every_video_path[curr_ind]
+    file_links_dictionary[every_thumbnail_names[curr_ind]
+                          ] = every_video_path[curr_ind]
 
 
 @app.route("/")
@@ -140,16 +145,17 @@ def hello_world():
     array_thumbnails = get_thumbnails(videos_folder)
     for thumbName in get_thumbnails("\\static\\Videos"):
         get_video_name[thumbName] = get_file_name(thumbName)
-    return render_template('index.html', files = array_thumbnails, video_names = get_video_name, folders = get_folders('Videos'))
+    return render_template('index.html', files=array_thumbnails, video_names=get_video_name, folders=get_folders('Videos'))
 
 
 @app.route("/videos/<video_name>")
 def video_display(video_name):
     if video_name in file_links_dictionary:
         thumbs_mini = sample(every_thumbnail_names, 4)
-        return render_template('video_display.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini, file_links = file_links_dictionary, folders = get_folders('Videos'))
+        return render_template('video_display.html', video_name=video_name, video_names=get_video_name, video_thumbs=thumbs_mini, file_links=file_links_dictionary, folders=get_folders('Videos'))
     else:
         return render_template('404_error.html')
+
 
 @app.route("/folders/<folder_name>")
 def folder_display(folder_name):
@@ -159,9 +165,10 @@ def folder_display(folder_name):
         array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
         for thumbName in array_thumbnails:
             get_video_name[thumbName] = get_file_name(thumbName)
-        
-        thumbs_pairs = [array_thumbnails[x:x+25] for x in range(0, len(array_thumbnails), 25)]
-        return render_template('folder_view.html', name = folder_name, files = array_thumbnails, video_names = get_video_name, folders = get_folders('Videos'))
+
+        thumbs_pairs = [array_thumbnails[x:x+25]
+                        for x in range(0, len(array_thumbnails), 25)]
+        return render_template('folder_view.html', name=folder_name, files=array_thumbnails, video_names=get_video_name, folders=get_folders('Videos'))
 
     except:
         return render_template('404_error.html')
@@ -172,15 +179,16 @@ def m_index():
     cleanup_thumbs(videos_folder)
     generate_thumbs(videos_folder)
     array_thumbnails = get_thumbnails(videos_folder)
-    thumb_groups = [array_thumbnails[x:x+items_per_page] for x in range(0, len(array_thumbnails), items_per_page)]
+    thumb_groups = [array_thumbnails[x:x+items_per_page]
+                    for x in range(0, len(array_thumbnails), items_per_page)]
     print(thumb_groups)
     for thumbName in get_thumbnails("\\static\\Videos"):
         get_video_name[thumbName] = get_file_name(thumbName)
     try:
-        return render_template('index_m.html', files = thumb_groups[0], video_names = get_video_name, folders = get_folders('Videos'), pages =len(thumb_groups) + 1, curr_page = 1)
+        return render_template('index_m.html', files=thumb_groups[0], video_names=get_video_name, folders=get_folders('Videos'), pages=len(thumb_groups) + 1, curr_page=1)
     except:
-        return render_template('index_m.html', files = [], video_names = get_video_name, folders = get_folders('Videos'), pages =1, curr_page = 1)
-    
+        return render_template('index_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), pages=1, curr_page=1)
+
 
 @app.route("/m/folders/<folder_name>")
 def folder_display_m(folder_name):
@@ -188,22 +196,24 @@ def folder_display_m(folder_name):
         cleanup_thumbs(videos_folder + folder_name + "\\")
         generate_thumbs(videos_folder + folder_name + "\\")
         array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
-        thumb_groups = [array_thumbnails[x:x+items_per_page] for x in range(0, len(array_thumbnails), items_per_page)]
+        thumb_groups = [array_thumbnails[x:x+items_per_page]
+                        for x in range(0, len(array_thumbnails), items_per_page)]
         for thumbName in array_thumbnails:
             get_video_name[thumbName] = get_file_name(thumbName)
         try:
-            return render_template('folder_view_m.html', name = folder_name, files = thumb_groups[0], video_names = get_video_name, folders = get_folders('Videos'), pages =len(thumb_groups) + 1, curr_page = 1)
+            return render_template('folder_view_m.html', name=folder_name, files=thumb_groups[0], video_names=get_video_name, folders=get_folders('Videos'), pages=len(thumb_groups) + 1, curr_page=1)
         except:
-            return render_template('folder_view_m.html', name = folder_name, files = [], video_names = get_video_name, folders = get_folders('Videos'), pages =1, curr_page = 1)
-        
+            return render_template('folder_view_m.html', name=folder_name, files=[], video_names=get_video_name, folders=get_folders('Videos'), pages=1, curr_page=1)
+
     except:
         return render_template('404_error.html')
+
 
 @app.route("/m/videos/<video_name>")
 def video_display_m(video_name):
     if video_name in file_links_dictionary:
         thumbs_mini = sample(every_thumbnail_names, 4)
-        return render_template('video_display_m.html', video_name = video_name, video_names = get_video_name, video_thumbs = thumbs_mini, file_links = file_links_dictionary, folders = get_folders('Videos'))
+        return render_template('video_display_m.html', video_name=video_name, video_names=get_video_name, video_thumbs=thumbs_mini, file_links=file_links_dictionary, folders=get_folders('Videos'))
     else:
         return render_template('404_error.html')
 
@@ -211,16 +221,17 @@ def video_display_m(video_name):
 @app.route("/m/page<number>")
 def pages_home(number):
     array_thumbnails = get_thumbnails(videos_folder)
-    thumb_groups = [array_thumbnails[x:x+items_per_page] for x in range(0, len(array_thumbnails), items_per_page)]
+    thumb_groups = [array_thumbnails[x:x+items_per_page]
+                    for x in range(0, len(array_thumbnails), items_per_page)]
     try:
         if int(number) > len(thumb_groups):
             return render_template('404_error.html')
-        else:    
+        else:
             cleanup_thumbs(videos_folder)
             generate_thumbs(videos_folder)
             for thumbName in get_thumbnails("\\static\\Videos"):
                 get_video_name[thumbName] = get_file_name(thumbName)
-            return render_template('index_m.html', files = thumb_groups[int(number) - 1], video_names = get_video_name, folders = get_folders('Videos'), pages =len(thumb_groups) + 1, curr_page = int(number))
+            return render_template('index_m.html', files=thumb_groups[int(number) - 1], video_names=get_video_name, folders=get_folders('Videos'), pages=len(thumb_groups) + 1, curr_page=int(number))
     except:
         return render_template('404_error.html')
 
@@ -231,10 +242,11 @@ def pages_folders(folder_name, number):
         cleanup_thumbs(videos_folder + folder_name + "\\")
         generate_thumbs(videos_folder + folder_name + "\\")
         array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
-        thumb_groups = [array_thumbnails[x:x+items_per_page] for x in range(0, len(array_thumbnails), items_per_page)]
+        thumb_groups = [array_thumbnails[x:x+items_per_page]
+                        for x in range(0, len(array_thumbnails), items_per_page)]
         for thumbName in array_thumbnails:
             get_video_name[thumbName] = get_file_name(thumbName)
-        return render_template('folder_view_m.html', name = folder_name, files = thumb_groups[int(number) - 1], video_names = get_video_name, folders = get_folders('Videos'), pages =len(thumb_groups) + 1, curr_page = int(number))
+        return render_template('folder_view_m.html', name=folder_name, files=thumb_groups[int(number) - 1], video_names=get_video_name, folders=get_folders('Videos'), pages=len(thumb_groups) + 1, curr_page=int(number))
     except:
         return render_template('404_error.html')
 
@@ -242,3 +254,53 @@ def pages_folders(folder_name, number):
 @app.route("/about")
 def about():
     return render_template('about.html')
+
+
+@app.route("/m/upload")
+def uploadm():
+    return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
+
+
+@app.route("/upload")
+def upload():
+    return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
+
+
+@app.route('/uploader', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        folder = request.form['curr_folder']
+        split_fname = f.filename.split('.')
+        extension = split_fname[len(split_fname) - 1]
+        folder_path = "static/Videos/" + f.filename if folder == 'home555412581__7aas' else "static/Videos/" + folder + "/" +f.filename
+        print(folder_path)
+
+        split_fname = f.filename.split('.')
+        extension = split_fname[len(split_fname) - 1]
+        if extension != 'mp4':
+            print("Invalid file")
+            return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
+
+        else:
+            f.save(folder_path)
+            return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
+
+
+@app.route('/m/uploader', methods=['GET', 'POST'])
+def upload_file_m():
+    if request.method == 'POST':
+        f = request.files['file']
+        folder = request.form['curr_folder']
+
+        split_fname = f.filename.split('.')
+        extension = split_fname[len(split_fname) - 1]
+        folder_path = "static/Videos/" + f.filename if folder == 'home555412581__7aas' else "static/Videos/" + folder + "/" +f.filename
+        print(folder_path)
+        if extension != 'mp4':
+            print("Invalid file")
+            return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
+
+        else:
+            f.save(folder_path)
+            return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
