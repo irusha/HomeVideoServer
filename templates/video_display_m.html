@@ -84,6 +84,7 @@
 
     <div style="position: center;" class="img_container">
         <div class="centered_cont">
+            {% if is_display_Recommendations %}
             <h1 id="desc_para" style="margin-bottom: 20px;">Recommended for you</h1>
             {% for item in video_thumbs %}
             <a href="/m/videos/{{item}}">
@@ -95,6 +96,7 @@
                 </div>
             </a>
             {% endfor %}
+            {% endif %}
         </div>
         <div id="folders">
             <h1 id="desc_para" style="margin-top: 20px;">Categories</h1>

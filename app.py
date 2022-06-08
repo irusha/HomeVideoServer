@@ -154,8 +154,12 @@ def hello_world():
 @app.route("/videos/<video_name>")
 def video_display(video_name):
     if video_name in file_links_dictionary:
-        thumbs_mini = sample(every_thumbnail_names, 4)
-        return render_template('video_display.html', video_name=video_name, video_names=get_video_name, video_thumbs=thumbs_mini, file_links=file_links_dictionary, folders=get_folders('Videos'))
+        try:
+            thumbs_mini = sample(every_thumbnail_names, 4)
+            return render_template('video_display.html', video_name=video_name, video_names=get_video_name, video_thumbs=thumbs_mini, file_links=file_links_dictionary, folders=get_folders('Videos'), is_display_Recommendations = True)
+        except:
+            return render_template('video_display.html', video_name=video_name, video_names=get_video_name, video_thumbs=[], file_links=file_links_dictionary, folders=get_folders('Videos'), is_display_Recommendations = False)
+        
     else:
         return render_template('404_error.html')
 
@@ -168,9 +172,6 @@ def folder_display(folder_name):
         array_thumbnails = get_thumbnails(videos_folder + folder_name + "\\")
         for thumbName in array_thumbnails:
             get_video_name[thumbName] = get_file_name(thumbName)
-
-        thumbs_pairs = [array_thumbnails[x:x+25]
-                        for x in range(0, len(array_thumbnails), 25)]
         return render_template('folder_view.html', name=folder_name, files=array_thumbnails, video_names=get_video_name, folders=get_folders('Videos'))
 
     except:
@@ -215,8 +216,12 @@ def folder_display_m(folder_name):
 @app.route("/m/videos/<video_name>")
 def video_display_m(video_name):
     if video_name in file_links_dictionary:
-        thumbs_mini = sample(every_thumbnail_names, 4)
-        return render_template('video_display_m.html', video_name=video_name, video_names=get_video_name, video_thumbs=thumbs_mini, file_links=file_links_dictionary, folders=get_folders('Videos'))
+        try:
+            thumbs_mini = sample(every_thumbnail_names, 4)
+            return render_template('video_display_m.html', video_name=video_name, video_names=get_video_name, video_thumbs=thumbs_mini, file_links=file_links_dictionary, folders=get_folders('Videos'), is_display_Recommendations = True)
+        except:
+            return render_template('video_display_m.html', video_name=video_name, video_names=get_video_name, video_thumbs=[], file_links=file_links_dictionary, folders=get_folders('Videos'), is_display_Recommendations = False)
+        
     else:
         return render_template('404_error.html')
 
@@ -324,7 +329,6 @@ def newFolder():
             ) {
                 console.log("You are on mobile view")
                 location.href = "../m/upload"
-
             }
             else{
                 location.href = "../upload"
