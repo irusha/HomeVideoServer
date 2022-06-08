@@ -49,7 +49,7 @@
                   <path d="M0 0h24v24H0z" fill="none" />
                   <path id="menu_button" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
                </svg></button>
-            
+
 
          </div>
          <div>
@@ -72,7 +72,7 @@
    <div style="position: center;" class="img_container">
 
 
-      <form action="/m/uploader" method="POST" enctype="multipart/form-data" style="padding-left: 20px;">
+      <form action="/m/upload" method="POST" enctype="multipart/form-data" style="padding-left: 20px;">
          <!-- <input class="fileChooser" type="file" name="file" /> -->
          <label for="inputTag">
             <h1 class="inpulLabel">Select a Video 📽</h1>
@@ -114,6 +114,15 @@
       {% else %}
       <p></p>
       {% endif %}
+
+      </br>
+      <div style="margin-left: 20px;">
+         <p onclick="showInput()" class="bottomText" style="cursor: pointer;">Create a New folder</p>
+         <form action="/newfolder" method="POST" enctype="multipart/form-data" id="inputForm" style="display: none;">
+            <input type="text" id="fname" name="fname" placeholder="Folder Name">
+            <input type="submit" id="subBut" value="OK">
+         </form>
+      </div>
 
       </br>
 

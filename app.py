@@ -43,6 +43,9 @@ def get_file_name(file):
 
 get_video_name = {}
 
+if os.path.exists(os.getcwd() + videos_folder) == False:
+    os.mkdir(os.getcwd() + videos_folder)
+
 
 # folder_path is the folder that contains the videos
 # By default, thumbnails folder automatically created in static\Videos
@@ -135,7 +138,6 @@ file_links_dictionary = {}
 for curr_ind in range(0, len(every_thumbnail_names)):
     file_links_dictionary[every_thumbnail_names[curr_ind]
                           ] = every_video_path[curr_ind]
-
 
 
 @app.route("/")
@@ -257,17 +259,7 @@ def about():
     return render_template('about.html')
 
 
-@app.route("/m/upload")
-def uploadm():
-    return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
-
-
-@app.route("/upload")
-def upload():
-    return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
-
-
-@app.route('/uploader', methods=['GET', 'POST'])
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         f = request.files['file']
@@ -288,9 +280,11 @@ def upload_file():
             f.save('static/' + folder_path + f.filename)
             file_links_dictionary[str(get_file_name(f.filename))] = folder_path
             return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
+    else:
+        return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
 
 
-@app.route('/m/uploader', methods=['GET', 'POST'])
+@app.route('/m/upload', methods=['GET', 'POST'])
 def upload_file_m():
     if request.method == 'POST':
         f = request.files['file']
@@ -300,7 +294,7 @@ def upload_file_m():
         extension = split_fname[len(split_fname) - 1]
         folder_path = "Videos/" if folder == 'home555412581__7aas' else "Videos/" + folder + "/"
         print(folder_path)
-        if extension != 'mp4':
+        if extension != 'mp4' or extension != 'mkv':
             print("Invalid file")
             return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
 
@@ -308,3 +302,32 @@ def upload_file_m():
             f.save('static/' + folder_path + f.filename)
             file_links_dictionary[str(get_file_name(f.filename))] = folder_path
             return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
+
+    else:
+        return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
+
+
+@app.route('/newfolder', methods=['GET', 'POST'])
+def newFolder():
+    if request.method == 'POST':
+        f = request.form['fname']
+        print(f)
+        if os.path.exists(os.getcwd() + videos_folder + f) == False:
+            os.mkdir(os.getcwd() + videos_folder + f)
+
+        return """<script>
+        window.onload = function () {
+                if (
+                navigator.userAgent.match(/Android/i) ||
+                navigator.userAgent.match(/iPhone/i)
+            ) {
+                console.log("You are on mobile view")
+                location.href = "../m/upload"
+
+            }
+            else{
+                location.href = "../upload"
+            }
+            }
+        </script>
+        """

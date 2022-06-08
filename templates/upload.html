@@ -28,7 +28,7 @@
     <div style="position: center;" class="img_container">
 
 
-        <form action="/uploader" method="POST" enctype="multipart/form-data" style="padding-left: 20px;">
+        <form action="/upload" method="POST" enctype="multipart/form-data" style="padding-left: 20px;">
             <!-- <input class="fileChooser" type="file" name="file" /> -->
             <div>
                 <label for="inputTag" style="display: inline-block;">
@@ -47,9 +47,9 @@
 
                 {% endfor %}
             </div>
-
+            
             <div>
-
+                
                 <label for="submitBut" style="display: inline-block;">
                     <h1 style="height: 48px;">Upload
                         <svg style="padding-top: 10px;" xmlns="http://www.w3.org/2000/svg"
@@ -61,14 +61,16 @@
                             <g>
                                 <path
                                     d="M18,15v3H6v-3H4v3c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-3H18z M7,9l1.41,1.41L11,7.83V16h2V7.83l2.59,2.58L17,9l-5-5L7,9z" />
-                            </g>
+                                </g>
                         </svg>
                     </h1>
                     <input class="hideTag" id="submitBut" type="submit" />
                 </label>
             </div>
         </form>
-
+        
+        
+        
         {% if isValid == 1 %}
         <p style="color: red; padding: 20px;">Invalid file</p>
         {% elif isValid == 2 %}
@@ -76,8 +78,17 @@
         {% else %}
         <p></p>
         {% endif %}
+        
+    </br>
+    <div style="margin-left: 20px;">
+        <p onclick="showInput()" class="bottomText" style="cursor: pointer;">Create a New folder</p>
+        <form action="/newfolder" method="POST" enctype="multipart/form-data" id="inputForm" style="display: none;">
+            <input type="text" id="fname" name="fname" placeholder="Folder Name">
+            <input type="submit" id="subBut" value="OK">
+        </form>
+    </div>
 
-        </br>
+</br>
 
     </div>
 
@@ -85,6 +96,11 @@
         let input = document.getElementById("inputTag");
         let imageName = document.getElementById("videoName")
         let homeRB = document.getElementById('home555412581__7aas')
+        let newFolder = document.getElementById('inputForm')
+
+        function showInput(){
+            newFolder.style.display = 'block'
+        }
 
         homeRB.checked = true
 
