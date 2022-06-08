@@ -272,14 +272,15 @@ def upload_file():
 
         split_fname = f.filename.split('.')
         extension = split_fname[len(split_fname) - 1]
-        if extension != 'mp4':
+        if extension == 'mp4' or extension == 'mkv':
+            f.save('static/' + folder_path + str(get_file_name(f.filename)) + '.mp4')
+            file_links_dictionary[str(get_file_name(f.filename))] = folder_path
+            return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
+
+        else:
             print("Invalid file")
             return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
 
-        else:
-            f.save('static/' + folder_path + f.filename)
-            file_links_dictionary[str(get_file_name(f.filename))] = folder_path
-            return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
     else:
         return render_template('upload.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
 
@@ -294,14 +295,14 @@ def upload_file_m():
         extension = split_fname[len(split_fname) - 1]
         folder_path = "Videos/" if folder == 'home555412581__7aas' else "Videos/" + folder + "/"
         print(folder_path)
-        if extension != 'mp4' or extension != 'mkv':
-            print("Invalid file")
-            return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
-
-        else:
-            f.save('static/' + folder_path + f.filename)
+        if extension == 'mp4' or extension == 'mkv':
+            f.save('static/' + folder_path + str(get_file_name(f.filename)) + '.mp4')
             file_links_dictionary[str(get_file_name(f.filename))] = folder_path
             return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=2)
+
+        else:
+            print("Invalid file")
+            return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=1)
 
     else:
         return render_template('upload_m.html', files=[], video_names=get_video_name, folders=get_folders('Videos'), isValid=0)
@@ -329,5 +330,4 @@ def newFolder():
                 location.href = "../upload"
             }
             }
-        </script>
-        """
+        </script>"""
